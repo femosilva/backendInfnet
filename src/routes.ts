@@ -3,7 +3,8 @@ import UserController from "./controller/UserController";
 
 const routes = Router();
 
-routes.get("/users", UserController.find);
 routes.post("/user", UserController.create);
+routes.get("/users", UserController.find);
+routes.get("/user/:id", UserController.findById);
 
 export default routes;
