@@ -43,6 +43,40 @@ class UserController {
       });
     }
   }
+
+  async update(request: Request, response: Response) {
+    const {id} = request.params;
+    const { name, lastName, email } = request.body;
+    try {
+      const user = await User.findByIdAndUpdate(id, {
+        name,
+        lastName,
+        email,
+      });
+      return response.json(user);
+    } catch (error) {
+      return response.status(500).send({
+        error: "Não foi possivel atualizar",
+        message: error,
+      });
+    }
+  }
+
+  async delete(request: Request, response: Response) {
+    const {id} = request.params;
+    try {
+      const user = await User.findByIdAndDelete(id);
+      if (!user) {
+        return response.status(404).json({message: "Usuario não existe"})
+      }
+      return response.json(user);
+    } catch (error) {
+      return response.status(500).send({
+        error: "Não foi possivel remover",
+        message: error,
+      });
+    }
+  }
 }
 
 export default new UserController();
